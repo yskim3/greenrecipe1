@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greenrecipe.main.mybatis.member.MemberMapper">
+	
+	<resultMap id="buyer" type="com.greenrecipe.main.member.dto.BuyerDTO">
+		<id property="buyer_num" column="buyer_num"/>
+		<result property="buyer_id" column="buyer_id"/>
+		<result property="buyer_email" column="buyer_email"/>
+		<result property="buyer_password" column="buyer_password"/>
+		<result property="buyer_name" column="buyer_name"/>
+		<result property="buyer_code" column="buyer_code"/>
+		<result property="buyer_addr" column="buyer_addr"/>
+		<result property="buyer_phone" column="buyer_phone"/>
+		<result property="buyer_grade" column="buyer_grade"/>
+		<result property="buyer_hash" column="buyer_hash"/>
+		<result property="buyer_cart" column="buyer_cart"/>
+		<result property="buyer_point" column="buyer_point"/>
+		<result property="buyer_coupon" column="buyer_coupon"/>
+		<result property="buyer_sessionId" column="buyer_session_id"/>
+		<result property="buyer_limitTime" column="buyer_limit_time"/>
+	</resultMap>
+	
+	<select id="buyerIdCheck" resultMap="buyer">
+		select * from buyer where buyer_id = #{buyer_id}
+	</select>
+	
+	<!-- 
+	<select id="idCheck" resultMap="buyer">
+		select * from buyer where buyer_id = #{buyer_id}
+	</select>
+	-->
+	
+	<select id="buyerAll" resultMap="buyer">
+		select * from buyer
+	</select>
+
+	<insert id="register">
+		insert into buyer (buyer_num, buyer_id, buyer_email, buyer_password, buyer_name, buyer_addr, buyer_phone, buyer_grade, buyer_hash, buyer_point, buyer_coupon, buyer_sessionId) values(buyer_seq.nextval, #{buyer_id}, #{buyer_email}, #{buyer_password}, #{buyer_name}, #{buyer_code}, #{buyer_addr}, #{buyer_phone}, #{buyer_grade}, #{buyer_hash}, #{buyer_point}, #{buyer_coupon}, #{buyer_sessionId})
+	</insert>
+
+	<update id="keepLogin">
+		update buyer set buyer_session_id=#{buyer_sessionId}, buyer_limit_time=#{buyer_limitDate} where buyer_id=#{buyer_id}
+	</update>
+	
+	<select id="BuyerSession" resultMap="buyer">
+		select * from buyer where buyer_session_id=#{buyer_sessionId}
+	</select>
+	
+</mapper>
